@@ -1,15 +1,10 @@
-(ns quickfit.oauth
+(ns quickfit.service-oauth
   (:import [java.net URLEncoder])
-  (:import [java.net URLDecoder])
-  (:import (javax.crypto Mac)
-           (javax.crypto.spec SecretKeySpec)
-           (java.util Base64)
-           (java.util UUID))
+  (:import (java.util UUID))
   (:require
             [dotenv :refer [env]]
             [buddy.core.mac :as mac]
             [buddy.core.codecs :as codecs]
-            [buddy.core.hash :as hash]
             [clj-http.client :as http-client]
             [cheshire.core :refer :all]
             )
@@ -25,23 +20,20 @@
   "Applies url encoding to a string."
   [url]
   (let [encoded-url
-        ;(url-encode url)
         (URLEncoder/encode url "UTF-8")
-        ] ;; Encode the URL
+        ]
     (clojure.string/replace encoded-url "+" "%20")))
 
 (defn generate-nonce
   "Generate a unique nonce value."
   []
   (str (UUID/randomUUID))
-  ;"xb7patrXmum&"
   )
 
 (defn generate-timestamp
   "Generate the current Unix timestamp in seconds."
   []
   (quot (System/currentTimeMillis) 1000)
-  ;"1748144854"
   )
 
 (defn create-param-string
@@ -93,17 +85,26 @@
     )
   )
 
+(defn get-request-params
+  "Return the necessary oauth params to complete the request to the fatsecret api.
+  :params: the params that are already known. EG: \"food_id\", \"search_expression\"
+  :return: the original params added the required oauth params.
+  "
+  [method url params]
+  (let [
+        request-params (add-mandatory-params params)
+        base-string (build-base-string method url request-params)
+        oauth_signature_dict {"oauth_signature" (hmac-sha1 base-string)}
+        ]
+    (merge request-params oauth_signature_dict)
+    )
+  )
+
 (defn -main []
   (let [
         url fatsecret-search-url
         user-params {"search_expression" "Apple Juice"}
-        request-params (add-mandatory-params user-params)
-        base-string (build-base-string "GET" url request-params)
-        oauth_signature_dict {"oauth_signature"
-                              ;"H%2Bmg4Gl2BwkTaQX71yIZZJSlp1E%3D"
-                              (hmac-sha1 base-string)
-                              }
-        final-params (merge request-params oauth_signature_dict)
+        final-params (get-request-params "GET" url user-params)
         response (http-client/get url {:query-params final-params
                                        })
         response-body (parse-string (:body response))
