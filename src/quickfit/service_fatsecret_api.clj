@@ -94,7 +94,7 @@
 
 (defn -main []
   (let [
-        food (search "Apple Juice" "ml")
+        food (search "Egg" "g")
         ]
     (println food) ;5589
     )
