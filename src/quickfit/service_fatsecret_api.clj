@@ -66,7 +66,7 @@
         unit (get serving "measurement_description")
         ]
     {:food_name food-name
-     :calories calories
+     :calories (Integer/parseInt calories)
      :unit unit
      }
     )
@@ -75,6 +75,7 @@
 (defn search
   "Gets the best match for a search, needs to specify if using \"g\" or \"ml\".
   Always responde with the 100g or 100ml portion.
+
   :param search-term: a string with the food or drink to get the information.
   :param unit: a string being mandatory \"g\" or \"ml\", if missing \"g\" is th assumed unit.
   "

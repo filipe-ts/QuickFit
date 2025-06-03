@@ -71,6 +71,6 @@
 (defn -main []
   (let [
         ]
-    (println (search "swimming 1hour"))
+    (println (search "swimming 1.3hours"))
     )
   )
