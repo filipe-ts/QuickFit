@@ -12,6 +12,7 @@
                  [cheshire "5.8.1"]
                  ]
   :plugins [[lein-ring "0.12.5"]]
+
   :ring {:handler quickfit.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
