@@ -72,24 +72,45 @@
     )
   )
 
+(defn calc-food-calories
+  "
+  Calculates the total calories for a given quantity and a food map.
+
+  :param food-map: food map.
+  :return: calories
+  :rtype: double
+  "
+  [food-map quantity]
+  (let [
+        total-calories (* (Integer/parseInt quantity) (/ (:calories food-map) 100))
+        ]
+    {:food_name (:food_name food-map)
+     :calories total-calories
+     :quantity quantity
+     :unit (:unit food-map)
+     }
+    )
+  )
+
 (defn search
   "Gets the best match for a search, needs to specify if using \"g\" or \"ml\".
   Always responde with the 100g or 100ml portion.
 
   :param search-term: a string with the food or drink to get the information.
   :param unit: a string being mandatory \"g\" or \"ml\", if missing \"g\" is th assumed unit.
+  :param quantity: the quantity of the unit to be returned.
   "
-  ([search-term unit]
+  ([search-term quantity unit]
    (let [
          food-id (get-food-id search-term)
          food-info (get-food-info food-id unit)
          food-map (extract-food food-info)
          ]
-      food-map
+      (calc-food-calories food-map quantity)
      )
    )
-  ([search-term]
-   (search search-term "g")
+  ([search-term quantity]
+   (search search-term quantity "g")
    )
   )
 

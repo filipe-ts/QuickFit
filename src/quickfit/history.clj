@@ -6,6 +6,7 @@
 
 (def history-atom (atom ()))
 (def history-size (atom 0))
+(def user-atom (atom {:name "" :age 0 :weight 0 :height 0}))
 
 (defn has-required-keys? [m required-keys]
   (every? #(contains? m %) required-keys))
@@ -80,21 +81,14 @@
     )
   )
 
-(defn -main []
-  (let [
-        food1 (fatsecret/search "apple")
-        food3 (fatsecret/search "Chocolate cake")
-        exercise1 (nutrix/search "Biking 40min")
-        list- (list food1 food3 exercise1)
-        transactions1 (doall (map #(create-transaction % "2025-01-29" history-atom history-size) list-))
-        transactions2 (doall (map #(create-transaction % "2025-05-29" history-atom history-size) list-))
-        transactions3 (doall (map #(create-transaction % "2025-03-12" history-atom history-size) list-))
-        on-march (get-time-period "2025-03-01" "2025-03-31" history-atom)
-        ]
-    ;(swap! history-atom #(sort-by :time %))
+(defn update-user
+  "Updates the user information.
 
-    (println @history-atom)
-    (println @history-size)
-    (println on-march)
-    )
+  :param user-map: A map containing the user information {:name :age :weight :height}.
+  :return: true if stored successfully, false otherwise.
+  :rtype: boolean
+  "
+  [user-map]
+  (reset! user-atom user-map)
   )
+

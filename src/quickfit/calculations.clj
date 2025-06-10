@@ -22,9 +22,3 @@
       )
     )
   )
-
-
-(defn -main []
-  (his/-main)
-  (println (cal-balance @history-atom))
-  )
