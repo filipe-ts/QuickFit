@@ -2,6 +2,7 @@
   (:require
             [front-end.parser :as parser]
             [front-end.register :as register]
+            [front-end.api :as api]
             )
   )
 
@@ -12,6 +13,11 @@
         ]
     (apply register/register-user info)
     )
+  )
+
+(defn get-user []
+  (println "This is your info:")
+  (api/get-user)
   )
 
 (defn command-add-food []

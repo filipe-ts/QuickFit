@@ -6,7 +6,7 @@
 
 (def history-atom (atom ()))
 (def history-size (atom 0))
-(def user-atom (atom {:name "" :age 0 :weight 0 :height 0}))
+(def user-atom (atom {:name "" :age 0 :weight 0 :height 0 :gender "male"}))
 
 (defn has-required-keys? [m required-keys]
   (every? #(contains? m %) required-keys))

@@ -92,8 +92,9 @@
                             age (get-in request [:query-params "age"])
                             weight (get-in request [:query-params "weight"])
                             height (get-in request [:query-params "height"])
+                            gender (get-in request [:query-params "gender"])
                             ]
-                        (quickfit.history/update-user {:name name :age age :weight weight :height height})
+                        (quickfit.history/update-user {:name name :age age :weight weight :height height :gender gender})
                         {
                          :status 200
                          :headers {"Content-Type" "application/json"}

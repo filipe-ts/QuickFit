@@ -85,13 +85,14 @@
    - weight: User's weight
 
    Returns a parsed JSON response on success or an error message on failure."
-  [name age height weight]
+  [name age height weight gender]
   (let [
         response (http-client/post (str api-url "/user")
                                   {:query-params {:name name
                                                  :age age
                                                  :height height
                                                  :weight weight
+                                                 :gender gender
                                                  }
                                    }
                                   )

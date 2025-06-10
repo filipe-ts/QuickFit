@@ -13,8 +13,8 @@
    - weight: User's weight
 
    Returns a parsed JSON response on success or an error message on failure."
-  [name age height weight]
-  (api/add-user name age height weight)
+  [name age height weight gender]
+  (api/add-user name age height weight gender)
   )
 
 (defn register-food
