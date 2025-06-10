@@ -34,6 +34,7 @@
       )
     (println "press enter to continue...")
     (read-line)
+    (read-line)
     (recur)
     )
   )

@@ -8,6 +8,12 @@
 
 (def api-url (env "API_URL"))
 
+(defn pretty-print-json
+  "Converts a JSON string to a pretty-printed string"
+  [json-str]
+  (-> json-str
+      (json/generate-string {:pretty true}))) ; Re-serialize with pretty-print
+
 (defn print-response
   "Prints the response from the API.
 
@@ -18,7 +24,7 @@
         code (:status response)
         ]
   (if (or (= code 201) (= code 200))
-    (println (json/parse-string (:body response) true))
+    (println (pretty-print-json (json/parse-string  (:body response) true)))
     (println (str "Error: " code " " (:body response)))
     )
   ))
@@ -123,7 +129,7 @@
                                    }
                                   )
         ]
-    (apply print-response response)
+    (print-response response)
   )
   )
 
