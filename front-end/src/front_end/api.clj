@@ -8,6 +8,21 @@
 
 (def api-url (env "API_URL"))
 
+(defn print-response
+  "Prints the response from the API.
+
+   Parameters:
+   - response: API response to be printed"
+  [response]
+  (let [
+        code (:status response)
+        ]
+  (if (or (= code 201) (= code 200))
+    (println (json/parse-string (:body response) true))
+    (println (str "Error: " code " " (:body response)))
+    )
+  ))
+
 (defn add-food
   "Retrieves food information from the API.
 
@@ -28,12 +43,8 @@
                                                  }
                                    }
                                   )
-        code (:status response)
         ]
-    (if (or (= code 201) (= code 200))
-      (json/parse-string (:body response) true)
-      (str "Error: " code " " (:body response))
-      )
+    (print-response response)
   )
   )
 
@@ -53,12 +64,9 @@
                                                  }
                                    }
                                   )
-        code (:status response)
         ]
-    (if  (or (= code 201) (= code 200))
-      (json/parse-string (:body response) true))
-      (str "Error: " code " " (:body response))
-    )
+    (print-response response)
+  )
   )
 
 (defn add-user
@@ -81,12 +89,8 @@
                                                  }
                                    }
                                   )
-        code (:status response)
         ]
-    (if  (or (= code 201) (= code 200))
-      (json/parse-string (:body response))
-      (str "Error: " code " " (:body response))
-      )
+    (print-response response)
   )
   )
 
@@ -97,12 +101,8 @@
   []
   (let [
         response (http-client/get (str api-url "/user"))
-        code (:status response)
         ]
-    (if (= code 200)
-      (json/parse-string (:body response))
-      (str "Error: " code " " (:body response))
-      )
+    (print-response response)
   )
   )
 
@@ -122,12 +122,8 @@
                                                  }
                                    }
                                   )
-        code (:status response)
         ]
-    (if (= code 200)
-      (json/parse-string (:body response))
-      (str "Error: " code " " (:body response))
-      )
+    (apply print-response response)
   )
   )
 
@@ -147,11 +143,7 @@
                                                  }
                                    }
                                   )
-        code (:status response)
         ]
-    (if (= code 200)
-      (json/parse-string (:body response))
-      (str "Error: " code " " (:body response))
-      )
+    (print-response response)
   )
   )

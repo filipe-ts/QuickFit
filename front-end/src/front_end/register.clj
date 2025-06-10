@@ -28,3 +28,15 @@
   [query time]
   (api/add-exercise query time)
   )
+
+(defn get-history
+  ""
+  [start-date end-date]
+  (api/get-history start-date end-date)
+  )
+
+(defn get-balance
+  ""
+  [start-date end-date]
+  (api/get-balance start-date end-date)
+  )

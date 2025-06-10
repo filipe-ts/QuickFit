@@ -47,6 +47,18 @@
 
   )
 
+(defn parse-period
+  ""
+  []
+  (let [
+        _ (println "Enter: \"<start date>\" <line break> \"<end date>\"")
+        start (read)
+        end (read)
+        ]
+    (list start end)
+    )
+  )
+
 (defn -main []
   (println (parse-food))
   )

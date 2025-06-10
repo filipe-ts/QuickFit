@@ -1,7 +1,10 @@
 (ns front-end.core
-  (:gen-class))
+  (:gen-class
+    )
+  (:require [front-end.menu :as menu])
+  )
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (menu/-main)
+)
